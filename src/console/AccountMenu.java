@@ -1,4 +1,5 @@
-package domain;
+package console;
 
 public interface AccountMenu {
+
 }
