@@ -14,9 +14,8 @@ public class CheckingAccount extends Account {
 
     @Override
     public boolean deposit(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
             return false;
-        }
 
         BigDecimal currentCreditUsage = getCreditUsage();
 
@@ -33,17 +32,21 @@ public class CheckingAccount extends Account {
     }
 
     @Override
+    public boolean canDeposit(BigDecimal amount) {
+        return amount != null && amount.compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    @Override
     public boolean withdraw(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
             return false;
-        }
 
         BigDecimal balance = getBalance();
         BigDecimal availableFunds = balance.add(getCreditLimit().subtract(getCreditUsage()));
 
-        if (amount.compareTo(availableFunds) > 0) {
+        if (amount.compareTo(availableFunds) > 0)
             return false;
-        }
+
 
         if (amount.compareTo(balance) <= 0) {
             subtractBalance(amount);
@@ -55,6 +58,17 @@ public class CheckingAccount extends Account {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean canWithdraw(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
+            return false;
+
+        BigDecimal balance = getBalance();
+        BigDecimal availableFunds = balance.add(getCreditLimit().subtract(getCreditUsage()));
+
+        return amount.compareTo(availableFunds) <= 0;
     }
 
     public BigDecimal getCreditLimit() {

@@ -22,7 +22,13 @@ public abstract class Account {
     }
 
     public abstract boolean deposit(BigDecimal amount);
+    public abstract boolean canDeposit(BigDecimal amount);
     public abstract boolean withdraw(BigDecimal amount);
+    public abstract boolean canWithdraw(BigDecimal amount);
+
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
+    }
 
     protected void addBalance(BigDecimal amount) {
         this.balance = this.balance.add(amount);

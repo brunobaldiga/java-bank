@@ -9,9 +9,8 @@ public class SavingsAccount extends Account {
 
     @Override
     public boolean deposit(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
             return false;
-        }
 
         addBalance(amount);
 
@@ -19,18 +18,34 @@ public class SavingsAccount extends Account {
     }
 
     @Override
+    public boolean canDeposit(BigDecimal amount) {
+        return amount != null && amount.compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    @Override
     public boolean withdraw(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
             return false;
-        }
 
         BigDecimal balance = getBalance();
 
-        if (amount.compareTo(balance) > 0) {
+        if (amount.compareTo(balance) > 0)
             return false;
-        }
 
         subtractBalance(amount);
+
+        return true;
+    }
+
+    @Override
+    public boolean canWithdraw(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
+            return false;
+
+        BigDecimal balance = getBalance();
+
+        if (amount.compareTo(balance) > 0)
+            return false;
 
         return true;
     }
