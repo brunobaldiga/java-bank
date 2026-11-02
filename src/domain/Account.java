@@ -41,7 +41,7 @@ public abstract class Account {
         StringBuilder sb = new StringBuilder();
         sb.append("ID: ").append(this.id).append("\n");
         sb.append("Nome Completo: ").append(this.fullName).append("\n");
-        sb.append("Saldo: ").append(this.balance).append("\n");
+        sb.append("Saldo: R$").append(this.balance).append("\n");
 
         return sb.toString();
     }

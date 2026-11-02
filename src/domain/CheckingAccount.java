@@ -76,6 +76,18 @@ public class CheckingAccount extends Account {
         return AccountType.CHECKING_ACCOUNT;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(this.getId()).append("\n");
+        sb.append("Nome Completo: ").append(this.getFullName()).append("\n");
+        sb.append("Saldo: R$").append(this.getBalance()).append("\n");
+        sb.append("Crédito utilizado: R$").append(this.getCreditUsage()).append("\n");
+        sb.append("Limite de crédito: R$").append(this.getCreditLimit()).append("\n");
+
+        return sb.toString();
+    }
+
     public BigDecimal getCreditLimit() {
         return creditLimit;
     }

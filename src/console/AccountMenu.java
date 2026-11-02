@@ -51,4 +51,9 @@ public abstract class AccountMenu {
             System.out.println(e.getMessage());
         }
     }
+
+    public void showInformation(Account account) {
+        System.out.println("Informações da conta:");
+        System.out.println(account);
+    }
 }

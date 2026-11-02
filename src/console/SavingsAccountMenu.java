@@ -16,7 +16,8 @@ public class SavingsAccountMenu extends AccountMenu {
         System.out.println("1. Depositar");
         System.out.println("2. Sacar");
         System.out.println("3. Investir");
-        System.out.println("4. Sair");
+        System.out.println("4. Mostrar informações");
+        System.out.println("5. Sair");
         System.out.print("> ");
 
         while (true) {
@@ -40,7 +41,8 @@ public class SavingsAccountMenu extends AccountMenu {
                 case 1 -> deposit(account);
                 case 2 -> withdraw(account);
                 case 3 -> invest(account);
-                case 4 -> running = false;
+                case 4 -> showInformation(account);
+                case 5 -> running = false;
                 default ->
                     System.out.println("Opção inválida.");
             }
