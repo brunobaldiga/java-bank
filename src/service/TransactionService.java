@@ -1,6 +1,7 @@
 package service;
 
 import domain.Account;
+import domain.SavingsAccount;
 import exception.DepositException;
 import exception.WithdrawException;
 import repository.AccountRepository;
@@ -33,5 +34,16 @@ public class TransactionService {
 
         if (!account.withdraw(amount))
             throw new WithdrawException("Saque inválido.");
+    }
+
+    public void applyInterest(Integer id) {
+        Account account = accountRepository.findById(id);
+
+        if (!(account instanceof SavingsAccount savingsAccount))
+            throw new IllegalArgumentException(
+                    "Apenas conta poupança podem receber rendimentos."
+            );
+
+        savingsAccount.applyInterest();
     }
 }

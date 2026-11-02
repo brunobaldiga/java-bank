@@ -6,8 +6,8 @@ public class CheckingAccount extends Account {
     private BigDecimal creditLimit;
     private BigDecimal creditUsage;
 
-    public CheckingAccount(Integer id, String fullName, String password) {
-        super(id, fullName, password);
+    public CheckingAccount(String fullName, String password) {
+        super(fullName, password);
         this.creditLimit = BigDecimal.valueOf(150);
         this.creditUsage = BigDecimal.ZERO;
     }

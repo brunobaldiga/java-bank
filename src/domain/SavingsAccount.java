@@ -3,8 +3,8 @@ package domain;
 import java.math.BigDecimal;
 
 public class SavingsAccount extends Account {
-    public SavingsAccount(Integer id, String fullName, String password) {
-        super(id, fullName, password);
+    public SavingsAccount(String fullName, String password) {
+        super(fullName, password);
     }
 
     @Override

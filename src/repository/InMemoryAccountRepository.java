@@ -2,12 +2,12 @@ package repository;
 
 import domain.Account;
 
-import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryAccountRepository implements AccountRepository {
-    private HashMap<Integer, Account> accounts = new HashMap<>();
+    private Map<Integer, Account> accounts = new HashMap<>();
+    private AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
     public Account findById(Integer id) {
@@ -19,11 +19,13 @@ public class InMemoryAccountRepository implements AccountRepository {
 
     @Override
     public void save(Account account) {
+        Objects.requireNonNull(account);
+        if (account.getId() == null) account.setId(nextId.getAndIncrement());
         accounts.put(account.getId(), account);
     }
 
     @Override
-    public HashMap<Integer, Account> findAll() {
-        return accounts;
+    public Map<Integer, Account> findAll() {
+        return Map.copyOf(accounts);
     }
 }

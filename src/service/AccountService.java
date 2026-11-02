@@ -1,13 +1,9 @@
 package service;
 
 import domain.Account;
-import exception.DepositException;
-import exception.TransferException;
-import exception.WithdrawException;
 import repository.AccountRepository;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.Map;
 
 public class AccountService {
     private final AccountRepository accountRepository;
@@ -24,9 +20,7 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
-    public HashMap<Integer, Account> findAllAccounts() {
+    public Map<Integer, Account> findAllAccounts() {
         return accountRepository.findAll();
     }
-
-
 }

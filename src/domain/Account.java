@@ -9,12 +9,11 @@ public abstract class Account {
     private String password;
     private BigDecimal balance;
 
-    protected Account(Integer id, String fullName, String password) {
-        this.id = Objects.requireNonNull(id);
+    protected Account(String fullName, String password) {
         this.fullName = Objects.requireNonNull(fullName);
         this.password = Objects.requireNonNull(password);
 
-        if (id <= 0|| fullName.isBlank() || password.isBlank()) {
+        if (fullName.isBlank() || password.isBlank()) {
             throw new IllegalArgumentException("Falha ao criar conta: valores inválidos.");
         }
 
@@ -57,5 +56,9 @@ public abstract class Account {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

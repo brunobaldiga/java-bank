@@ -2,7 +2,7 @@ package repository;
 
 import domain.Account;
 
-import java.util.HashMap;
+import java.util.Map;
 
 
 public interface AccountRepository {
@@ -10,5 +10,5 @@ public interface AccountRepository {
 
     void save(Account account);
 
-    HashMap<Integer, Account> findAll();
+    Map<Integer, Account> findAll();
 }

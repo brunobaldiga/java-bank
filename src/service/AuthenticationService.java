@@ -11,10 +11,12 @@ public class AuthenticationService {
         this.accountRepository = accountRepository;
     }
 
-    public void authenticate(Integer id, String password) {
+    public Account authenticate(Integer id, String password) {
         Account account = accountRepository.findById(id);
 
         if (!account.checkPassword(password))
             throw new AuthenticationException("ID ou senha inválidos.");
+
+        return account;
     }
 }
