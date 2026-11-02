@@ -46,6 +46,8 @@ public abstract class Account {
         return sb.toString();
     }
 
+    public abstract AccountType getAccountType();
+
     public BigDecimal getBalance() {
         return balance;
     }

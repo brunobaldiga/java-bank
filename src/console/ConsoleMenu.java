@@ -21,20 +21,26 @@ public class ConsoleMenu {
         this.authenticationService = authenticationService;
     }
 
-    public Integer menu() {
+    public Integer show() {
         System.out.println("Bem-vindo ao Java Bank");
         System.out.println("\nSelecione uma opção:");
         System.out.println("1. Criar conta");
         System.out.println("2. Entrar em conta");
-        System.out.println("4. Sair");
+        System.out.println("3. Sair");
         System.out.print("> ");
 
-        return scanner.nextInt();
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Escolha uma opção válida.");
+                System.out.print("> ");
+            }
+        }
     }
 
     public void createAccount() {
         System.out.print("Nome Completo: ");
-        scanner.nextLine();
         String fullName = scanner.nextLine();
 
         System.out.print("Senha: ");
@@ -71,10 +77,10 @@ public class ConsoleMenu {
         try {
             Account account = authenticationService.authenticate(id, password);
 
-            System.out.printf("Bem vindo %s%n", account.getFullName());
+            System.out.printf("Bem-vindo %s%n", account.getFullName());
 
             return account;
-        } catch (AuthenticationException | NoSuchElementException e) {
+        } catch (AuthenticationException e) {
             System.out.println(e.getMessage());
         }
 

@@ -17,6 +17,9 @@ public abstract class AccountMenu {
         this.transactionService = transactionService;
     }
 
+    public abstract Integer show();
+    public abstract void run(Account account);
+
     public void deposit(Account account) {
         System.out.print("Digite o valor: ");
 

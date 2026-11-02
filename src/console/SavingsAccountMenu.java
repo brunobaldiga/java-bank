@@ -11,7 +11,7 @@ public class SavingsAccountMenu extends AccountMenu {
         super(scanner, transactionService);
     }
 
-    public Integer menu() {
+    public Integer show() {
         System.out.println("Selecione uma opção:");
         System.out.println("1. Depositar");
         System.out.println("2. Sacar");
@@ -19,7 +19,32 @@ public class SavingsAccountMenu extends AccountMenu {
         System.out.println("4. Sair");
         System.out.print("> ");
 
-        return Integer.parseInt(scanner.nextLine());
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Escolha uma opção válida.");
+                System.out.print("> ");
+            }
+        }
+    }
+
+    @Override
+    public void run(Account account) {
+        boolean running = true;
+
+        while (running) {
+            Integer option = show();
+
+            switch (option) {
+                case 1 -> deposit(account);
+                case 2 -> withdraw(account);
+                case 3 -> invest(account);
+                case 4 -> running = false;
+                default ->
+                    System.out.println("Opção inválida.");
+            }
+        }
     }
 
     public void invest(Account account) {

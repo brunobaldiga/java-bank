@@ -54,4 +54,9 @@ public class SavingsAccount extends Account {
         BigDecimal interestRate = new BigDecimal("0.005");
         addBalance(getBalance().multiply(interestRate));
     }
+
+    @Override
+    public AccountType getAccountType() {
+        return AccountType.SAVINGS_ACCOUNT;
+    }
 }

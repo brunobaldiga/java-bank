@@ -71,6 +71,11 @@ public class CheckingAccount extends Account {
         return amount.compareTo(availableFunds) <= 0;
     }
 
+    @Override
+    public AccountType getAccountType() {
+        return AccountType.CHECKING_ACCOUNT;
+    }
+
     public BigDecimal getCreditLimit() {
         return creditLimit;
     }
