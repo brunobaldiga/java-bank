@@ -1,0 +1,120 @@
+package domain;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+import java.math.BigDecimal;
+
+@Entity
+@DiscriminatorValue("CHECKING_ACCOUNT")
+public class CheckingAccount extends Account {
+    @Column(name = "overdraft_limit")
+    private BigDecimal creditLimit;
+
+    @Column(name = "credit_usage")
+    private BigDecimal creditUsage;
+
+    public CheckingAccount() {
+        super();
+    }
+
+    public CheckingAccount(String fullName, String password) {
+        super(fullName, password);
+        this.creditLimit = BigDecimal.valueOf(150);
+        this.creditUsage = BigDecimal.ZERO;
+    }
+
+    @Override
+    public boolean deposit(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
+            return false;
+
+        BigDecimal currentCreditUsage = getCreditUsage();
+
+        if (amount.compareTo(currentCreditUsage) >= 0) {
+            BigDecimal depositLeft = amount.subtract(currentCreditUsage);
+            subtractCreditUsage(currentCreditUsage);
+            addBalance(depositLeft);
+
+        } else {
+            subtractCreditUsage(amount);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean canDeposit(BigDecimal amount) {
+        return amount != null && amount.compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    @Override
+    public boolean withdraw(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
+            return false;
+
+        BigDecimal balance = getBalance();
+        BigDecimal availableFunds = balance.add(getCreditLimit().subtract(getCreditUsage()));
+
+        if (amount.compareTo(availableFunds) > 0)
+            return false;
+
+
+        if (amount.compareTo(balance) <= 0) {
+            subtractBalance(amount);
+        } else {
+            BigDecimal newCreditUsage = amount.subtract(balance);
+
+            subtractBalance(balance);
+            addCreditUsage(newCreditUsage);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean canWithdraw(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
+            return false;
+
+        BigDecimal balance = getBalance();
+        BigDecimal availableFunds = balance.add(getCreditLimit().subtract(getCreditUsage()));
+
+        return amount.compareTo(availableFunds) <= 0;
+    }
+
+    @Override
+    public AccountType getAccountType() {
+        return AccountType.CHECKING_ACCOUNT;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(this.getId()).append("\n");
+        sb.append("Nome Completo: ").append(this.getFullName()).append("\n");
+        sb.append("Saldo: R$").append(this.getBalance()).append("\n");
+        sb.append("Crédito utilizado: R$").append(this.getCreditUsage()).append("\n");
+        sb.append("Limite de crédito: R$").append(this.getCreditLimit()).append("\n");
+
+        return sb.toString();
+    }
+
+    public BigDecimal getCreditLimit() {
+        return creditLimit;
+    }
+
+    public BigDecimal getCreditUsage() {
+        return creditUsage;
+    }
+
+    private void addCreditUsage(BigDecimal amount) {
+        this.creditUsage = this.creditUsage.add(amount);
+    }
+
+    private void subtractCreditUsage(BigDecimal amount) {
+        this.creditUsage = creditUsage.subtract(amount);
+    }
+
+}

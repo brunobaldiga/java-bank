@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: java-bank-postgres
+    environment:
+      POSTGRES_DB: javabank
+      POSTGRES_USER: javabank
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
